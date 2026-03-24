@@ -1,3 +1,5 @@
+-- Exercise: 2. Console connection
+
 CREATE TABLE blogs (
     id SERIAL PRIMARY KEY,
     author text,
