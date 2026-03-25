@@ -6,7 +6,11 @@ const { SECRET } = require('../util/config')
 loginRouter.post('/', async (request, response) => {
   const { username, password } = request.body
 
-  const user = await User.findOne({ username })
+  const user = await User.findOne({
+    where: {
+      username,
+    },
+  })
 
   if (!(user && password == 'pass')) {
     return response.status(401).json({
@@ -19,7 +23,7 @@ loginRouter.post('/', async (request, response) => {
     id: user.id,
   }
 
-  const token = jwt.sign(userForToken, SECRET, { expiresIn: 60*60 })
+  const token = jwt.sign(userForToken, SECRET, { expiresIn: 60 * 60 })
 
   response.status(200).send({ token, username: user.username, name: user.name })
 })
