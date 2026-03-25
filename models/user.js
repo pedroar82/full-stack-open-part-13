@@ -15,6 +15,12 @@ User.init(
       type: DataTypes.STRING,
       unique: true,
       allowNull: false,
+      validate: {
+        is: {
+          args: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+          msg: 'username must be a valid email address',
+        },
+      },
     },
     name: {
       type: DataTypes.STRING,
