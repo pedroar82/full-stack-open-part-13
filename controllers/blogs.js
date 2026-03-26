@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const jwt = require('jsonwebtoken')
+const { Op } = require('sequelize')
 
 const { SECRET } = require('../util/config')
 const { Blog } = require('../models')
@@ -43,6 +44,11 @@ router.get('/', async (req, res) => {
     include: {
       model: User,
       attributes: ['name'],
+    },
+    where: {
+      title: {
+        [Op.iLike]: `%${req.query.search || ''}%`,
+      },
     },
   })
   res.json(blogs)
