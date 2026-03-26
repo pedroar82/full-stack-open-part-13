@@ -46,9 +46,18 @@ router.get('/', async (req, res) => {
       attributes: ['name'],
     },
     where: {
-      title: {
-        [Op.iLike]: `%${req.query.search || ''}%`,
-      },
+      [Op.or]: [
+        {
+          author: {
+            [Op.iLike]: `%${req.query.search || ''}%`,
+          },
+        },
+        {
+          title: {
+            [Op.iLike]: `%${req.query.search || ''}%`,
+          },
+        },
+      ],
     },
   })
   res.json(blogs)
