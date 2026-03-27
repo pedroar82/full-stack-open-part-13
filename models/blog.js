@@ -3,7 +3,8 @@ const { sequelize } = require('../util/db')
 
 class Blog extends Model {}
 
-Blog.init({
+Blog.init(
+  {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -25,12 +26,27 @@ Blog.init({
       type: DataTypes.INTEGER,
       defaultValue: 0,
     },
+    year: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      validate: {
+        min: {
+          args: 1991,
+          msg: 'The year should be at least equal to 1991',
+        },
+        max: {
+          args: new Date().getFullYear(),
+          msg: `Year cannot be greater than the current year ${new Date().getFullYear()}`,
+        },
+      },
+    },
   },
   {
     sequelize,
     underscored: true,
     timestamps: false,
-    modelName: 'blog'
-  })
+    modelName: 'blog',
+  },
+)
 
 module.exports = Blog
