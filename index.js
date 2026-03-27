@@ -1,11 +1,7 @@
 
-const { Sequelize, Model, DataTypes } = require('sequelize')
 const express = require('express')
 const middleware = require('./util/middleware')
 const app = express()
-
-const Blog = require('./models/blog')
-const User = require('./models/user')
 
 const { PORT } = require('./util/config')
 const { connectToDatabase } = require('./util/db')
@@ -15,6 +11,7 @@ const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
 const authorRouter = require('./controllers/authors')
 const dbRouter = require('./controllers/db')
+const readinglistsRouter = require('./controllers/readinglists')
 
 app.use(express.json())
 
@@ -23,6 +20,7 @@ app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 app.use('/api/authors', authorRouter)
 app.use('/api/reset', dbRouter)
+app.use('/api/readinglists', readinglistsRouter)
 
 app.get('/', (req, res) => {
   res.status(200).end()
