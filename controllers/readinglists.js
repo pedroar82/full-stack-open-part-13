@@ -8,6 +8,7 @@ router.post('/', async (req, res, next) => {
   try {
     const blog = await Blog.findByPk(req.body.blogId)
     const user = await User.findByPk(req.body.userId)
+    const read = req.body.read
 
     if (!blog || !user) {
       return res.status(404).end()
@@ -16,6 +17,7 @@ router.post('/', async (req, res, next) => {
     const readingList = await ReadingList.create({
       userId: user.id,
       blogId: blog.id,
+      read: read ? read : false
     })
     return res.json(readingList)
   } catch (error) {

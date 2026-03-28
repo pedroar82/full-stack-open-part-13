@@ -16,12 +16,20 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
+    const throughReadList = {
+      attributes: ['id', 'read'],
+    }
+
+    if (req.query.read !== undefined) {
+      throughReadList.where = {
+        read: req.query.read === 'true',
+      }
+    }
+
     const user = await User.findByPk(req.params.id, {
       include: {
         model: Blog,
-        through: {
-          attributes: ['id', 'read'],
-        },
+        through: throughReadList,
         attributes: ['id', 'url', 'title', 'author', 'likes', 'year'],
       },
     })
@@ -35,6 +43,7 @@ router.get('/:id', async (req, res, next) => {
     next(error)
   }
 })
+
 
 router.post('/', async (req, res, next) => {
   try {
