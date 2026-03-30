@@ -28,7 +28,7 @@ const sessionValidator = async (req, res, next) => {
 
     const user = await User.findByPk(req.decodedToken.id)
     if (!user || user.disable) {
-      return res.status(401).json({ error: 'user disabled' })
+      return res.status(404).json({ error: 'user disabled' })
     }
   } catch (error) {
     next(error)

@@ -24,7 +24,14 @@ module.exports = {
         references: { model: 'blogs', key: 'id' },
       },
     })
+
+    await queryInterface.addConstraint('reading_lists', {
+      fields: ['user_id', 'blog_id'],
+      type: 'unique',
+      name: 'unique_user_blog_pair',
+    })
   },
+
   down: async ({ context: queryInterface }) => {
     await queryInterface.dropTable('reading_lists')
   },

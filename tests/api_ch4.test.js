@@ -59,7 +59,7 @@ describe('Reading Lists API', () => {
     }
   })
   
-  it('returns 400 when blogId is missing', async () => {
+   it('returns 400 when blogId is missing', async () => {
     const readingListEntry = {
       userId: testData.users[0].id
     }
@@ -146,7 +146,7 @@ describe('Reading Lists API', () => {
   it('user can mark a blog as read with authentication', async () => {
     const userResponse = await axios.get(`${baseUrl}/users/${testData.users[0].id}`)
     const readingListId = userResponse.data.readings[0].reading_list.id
-    
+
     const response = await axios.put(
       `${baseUrl}/readinglists/${readingListId}`,
       { read: true },
@@ -156,7 +156,7 @@ describe('Reading Lists API', () => {
     assert.ok([200, 201].includes(response.status))
     assert.strictEqual(response.data.read, true)
   })
-  
+ 
   it('marking as read requires authentication', async () => {
     const userResponse = await axios.get(`${baseUrl}/users/${testData.users[0].id}`)
     const readingListId = userResponse.data.readings[0].reading_list.id
@@ -187,7 +187,7 @@ describe('Reading Lists API', () => {
       assert.strictEqual(error.response.status, 401)
     }
   })
-  
+   
   it('returns 404 when marking non-existent reading list entry', async () => {
     try {
       await axios.put(
@@ -209,7 +209,7 @@ describe('Reading Lists API', () => {
     const responseUnread = await axios.get(`${baseUrl}/users/${testData.users[0].id}?read=false`)
     assert.ok([200, 201].includes(responseUnread.status))
     assert.strictEqual(responseUnread.data.readings.length, 0)
-  })
+  }) 
 })
 
 describe('Session Management API', () => {
